@@ -1,0 +1,123 @@
+{
+    "users": [{
+            "username": "JakeWharton",
+            "name": "Jake Wharton",
+            "avatar": "@drawable/user1",
+            "company": "Google, Inc.",
+            "location": "Pittsburgh, PA, USA",
+            "repository": 102,
+            "follower": 56995,
+            "following": 12
+        },
+        {
+            "username": "amitshekhariitbhu",
+            "name": "AMIT SHEKHAR",
+            "avatar": "@drawable/user2",
+            "company": "@MindOrksOpenSource",
+            "location": "New Delhi, India",
+            "repository": 37,
+            "follower": 5153,
+            "following": 2
+        },
+        {
+            "username": "romainguy",
+            "name": "Romain Guy",
+            "avatar": "@drawable/user3",
+            "company": "Google",
+            "location": "California",
+            "repository": 9,
+            "follower": 7972,
+            "following": 0
+        },
+        {
+            "username": "chrisbanes",
+            "name": "Chris Banes",
+            "avatar": "@drawable/user4",
+            "company": "@google working on @android",
+            "location": "Sydney, Australia",
+            "repository": 30,
+            "follower": 14725,
+            "following": 1
+        },
+        {
+            "username": "tipsy",
+            "name": "David",
+            "avatar": "@drawable/user5",
+            "company": "Working Group Two",
+            "location": "Trondheim, Norway",
+            "repository": 56,
+            "follower": 788,
+            "following": 0
+        },
+        {
+            "username": "ravi8x",
+            "name": "Ravi Tamada",
+            "avatar": "@drawable/user6",
+            "company": "AndroidHive | Droid5",
+            "location": "India",
+            "repository": 28,
+            "follower": 2260,
+            "following": 3
+        },
+        {
+            "username": "felangel",
+            "name": "Felix Angelov",
+            "avatar": "@drawable/user7",
+            "company": "VGVentures",
+            "location": "Chicago",
+            "repository": 94,
+            "follower": 3621,
+            "following": 38
+        },
+        {
+            "username": "rrousselGit",
+            "name": "Remi Rousselet",
+            "avatar": "@drawable/user8",
+            "company": "-",
+            "location": "-",
+            "repository": 48,
+            "follower": 3164,
+            "following": 51
+        },
+        {
+            "username": "hdodenhof",
+            "name": "Henning Dodenhof",
+            "avatar": "@drawable/user9",
+            "company": "-",
+            "location": "Hamburg, Germany",
+            "repository": 32,
+            "follower": 644,
+            "following": 3
+        },
+        {
+            "username": "KrauseFx",
+            "name": "Felix Krause",
+            "avatar": "@drawable/user10",
+            "company": "R&D at Root",
+            "location": "San Francisco",
+            "repository": 127,
+            "follower": 4173,
+            "following": 10
+        },
+        {
+            "username": "joshaber",
+            "name": "Josh Abernathy",
+            "avatar": "@drawable/user11",
+            "company": "GitHub",
+            "location": "The Gem City",
+            "repository": 127,
+            "follower": 2148,
+            "following": 39
+        },
+        {
+            "username": "kamranahmedse",
+            "name": "Kamran Ahmed",
+            "avatar": "@drawable/user12",
+            "company": "Tradeling",
+            "location": "Berlin, Germany",
+            "repository": 75,
+            "follower": 17362,
+            "following": 139
+        }
+    ]
+}

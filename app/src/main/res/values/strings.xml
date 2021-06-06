@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Github User App</string>
+    <string name="space_repositories"><![CDATA[ repositories]]></string>
+    <string name="space_followers"><![CDATA[ followers]]></string>
+    <string name="center_dot">·</string>
+    <string name="space_following"><![CDATA[ following]]></string>
+    <string name="repositories">Repositories</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="user_profile">User Profile</string>
+    <string name="horizontal_dots">•••</string>
+    <string name="github">github</string>
+</resources>
