@@ -58,9 +58,9 @@ class UsersAdapter(private val data: GithubResponseModel) :
                     .load(imageResource)
                     .into(holder.userImage)
 
-                /*holder.itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(list.users[position])
-                }*/
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.onItemClick(username.orEmpty())
+                }
             }
         } else {
             with(data.items[position]) {
@@ -70,9 +70,9 @@ class UsersAdapter(private val data: GithubResponseModel) :
                     .load(avatarUrl)
                     .into(holder.userImage)
 
-                /*holder.itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(list.users[position])
-                }*/
+                holder.itemView.setOnClickListener {
+                    onItemClickListener.onItemClick(login)
+                }
             }
         }
     }
@@ -88,7 +88,7 @@ class UsersAdapter(private val data: GithubResponseModel) :
     }
 
     interface ItemClickListener {
-        fun onItemClick(data: UserModel)
+        fun onItemClick(username: String)
     }
 
 }

@@ -1,6 +1,5 @@
 package com.anandarh.githubuserapp.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,30 +14,36 @@ import kotlinx.coroutines.launch
 
 
 class UserViewModel(private val resourceProvider: ResourceProvider) : ViewModel() {
-    private val _userRepository:UserRepository = UserRepository()
+    private val _userRepository: UserRepository = UserRepository()
     private val _dataState: MutableLiveData<DataState<GithubResponseModel>> by lazy {
         MutableLiveData<DataState<GithubResponseModel>>().also {
             setStateEvent(UserStateEvent.GetUsersEvent)
         }
     }
+    private val _searchQuery: MutableLiveData<String> = MutableLiveData()
 
     val dataState: LiveData<DataState<GithubResponseModel>>
         get() = _dataState
 
-    fun setStateEvent(userStateEvent: UserStateEvent){
+    val searchQuery: LiveData<String>
+        get() = _searchQuery
+
+    fun setSearchQuery(query: String) {
+            _searchQuery.postValue(query)
+    }
+
+    fun setStateEvent(userStateEvent: UserStateEvent) {
 
         viewModelScope.launch {
             when (userStateEvent) {
                 is UserStateEvent.GetSearchUserEvent -> {
-                    _userRepository.getUsers(userStateEvent.username).onEach {
-                        dataState ->
+                    _userRepository.getUsers(userStateEvent.username).onEach { dataState ->
                         _dataState.postValue(dataState)
                     }
                         .launchIn(viewModelScope)
                 }
                 UserStateEvent.GetUsersEvent -> {
-                    _userRepository.getLocalUsers(resourceProvider).onEach {
-                            dataState ->
+                    _userRepository.getLocalUsers(resourceProvider).onEach { dataState ->
                         _dataState.postValue(dataState)
                     }
                         .launchIn(viewModelScope)
