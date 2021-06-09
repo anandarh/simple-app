@@ -3,7 +3,7 @@ package com.anandarh.githubuserapp.models
 
 import com.google.gson.annotations.SerializedName
 
-data class GithubUserModel(
+data class GithubItemModel(
     @SerializedName("avatar_url")
     val avatarUrl: String,
     @SerializedName("events_url")

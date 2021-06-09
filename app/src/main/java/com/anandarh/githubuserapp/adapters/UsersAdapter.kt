@@ -1,6 +1,5 @@
 package com.anandarh.githubuserapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.models.GithubResponseModel
-import com.anandarh.githubuserapp.models.UserModel
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -26,7 +24,6 @@ class UsersAdapter(private val data: GithubResponseModel) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        Log.d("RESAP", "DATA is null ${data.userListModel != null}")
         return if (data.userListModel != null) defaultLayout else searchLayout
     }
 
@@ -45,11 +42,11 @@ class UsersAdapter(private val data: GithubResponseModel) :
         if (data.userListModel != null) {
             with(data.userListModel.users[position]) {
                 holder.userName.text = name
-                holder.userAccount.text = username
-                holder.totalRepo.text = "$repository"
+                holder.userAccount.text = login
+                holder.totalRepo.text = "$public_repos"
 
                 val imageResource: Int = holder.itemView.context.resources.getIdentifier(
-                    avatar,
+                    avatar_url,
                     null,
                     holder.itemView.context.packageName
                 )
@@ -59,7 +56,7 @@ class UsersAdapter(private val data: GithubResponseModel) :
                     .into(holder.userImage)
 
                 holder.itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(username.orEmpty())
+                    onItemClickListener.onItemClick(login.orEmpty())
                 }
             }
         } else {

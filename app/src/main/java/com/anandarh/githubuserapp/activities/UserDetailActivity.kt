@@ -30,18 +30,18 @@ class UserDetailActivity : AppCompatActivity() {
     private fun setData() {
 
         val imageResource: Int = this@UserDetailActivity.resources.getIdentifier(
-            user.avatar,
+            user.avatar_url,
             null,
             this@UserDetailActivity.packageName
         )
 
         Glide.with(this@UserDetailActivity).load(imageResource).into(binding.userImage)
         binding.userName.text = user.name
-        binding.userAccount.text = "@${user.username}"
+        binding.userAccount.text = "@${user.login}"
         binding.userCompany.text = user.company
         binding.userLocation.text = user.location
-        binding.totalRepo.text = user.repository.toString()
-        binding.totalFollowers.text = user.follower.toString()
+        binding.totalRepo.text = user.public_repos.toString()
+        binding.totalFollowers.text = user.followers.toString()
         binding.totalFollowing.text = user.following.toString()
     }
 
@@ -53,7 +53,7 @@ class UserDetailActivity : AppCompatActivity() {
         binding.btnGithub.setOnClickListener {
             val browserIntent = Intent().apply {
                 action = Intent.ACTION_VIEW
-                data = Uri.parse("https://github.com/${user.username}")
+                data = Uri.parse("https://github.com/${user.login}")
             }
             startActivity(browserIntent)
         }
@@ -61,7 +61,7 @@ class UserDetailActivity : AppCompatActivity() {
         binding.btnShare.setOnClickListener {
             val share = Intent.createChooser(Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "https://github.com/${user.username}")
+                putExtra(Intent.EXTRA_TEXT, "https://github.com/${user.login}")
                 type = "text/plain"
             }, null)
             startActivity(share)
