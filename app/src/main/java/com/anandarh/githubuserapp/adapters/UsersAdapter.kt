@@ -1,34 +1,52 @@
 package com.anandarh.githubuserapp.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.anandarh.githubuserapp.databinding.ItemUserBinding
-import com.anandarh.githubuserapp.models.UserListModel
+import com.anandarh.githubuserapp.R
+import com.anandarh.githubuserapp.models.GithubResponseModel
 import com.anandarh.githubuserapp.models.UserModel
 import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
 
-class UsersAdapter(private val list: UserListModel) :
+
+class UsersAdapter(private val data: GithubResponseModel) :
     RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
 
     private lateinit var onItemClickListener: ItemClickListener
+
+    private val searchLayout:Int = 0
+    private val defaultLayout:Int = 1
 
     fun setOnItemClickListener(onItemClickListener: ItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
 
+    override fun getItemViewType(position: Int): Int {
+        Log.d("RESAP", "DATA is null ${data.userListModel != null}")
+        return if (data.userListModel != null) defaultLayout else searchLayout
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val binding = ItemUserBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = if (viewType == searchLayout) {
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_user_search, parent, false)
+        } else {
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_user, parent, false)
+        }
         return UserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        with(holder) {
-            with(list.users[position]) {
-                binding.userName.text = name
-                binding.userAccount.text = username
-                binding.totalRepo.text = "$repository"
+        if (data.userListModel != null) {
+            with(data.userListModel.users[position]) {
+                holder.userName.text = name
+                holder.userAccount.text = username
+                holder.totalRepo.text = "$repository"
 
                 val imageResource: Int = holder.itemView.context.resources.getIdentifier(
                     avatar,
@@ -38,18 +56,36 @@ class UsersAdapter(private val list: UserListModel) :
 
                 Glide.with(holder.itemView.context)
                     .load(imageResource)
-                    .into(binding.userImage)
+                    .into(holder.userImage)
 
-                holder.itemView.setOnClickListener {
+                /*holder.itemView.setOnClickListener {
                     onItemClickListener.onItemClick(list.users[position])
-                }
+                }*/
+            }
+        } else {
+            with(data.items[position]) {
+                holder.userAccount.text = login
+
+                Glide.with(holder.itemView.context)
+                    .load(avatarUrl)
+                    .into(holder.userImage)
+
+                /*holder.itemView.setOnClickListener {
+                    onItemClickListener.onItemClick(list.users[position])
+                }*/
             }
         }
     }
 
-    override fun getItemCount() = list.users.size
+    override fun getItemCount() =
+        if (data.userListModel != null) data.userListModel.users.size else data.items.size
 
-    inner class UserViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
+    class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var userImage: CircleImageView = itemView.findViewById(R.id.userImage)
+        var userAccount: TextView = itemView.findViewById(R.id.userAccount)
+        var userName: TextView = itemView.findViewById(R.id.userName)
+        var totalRepo: TextView = itemView.findViewById(R.id.totalRepo)
+    }
 
     interface ItemClickListener {
         fun onItemClick(data: UserModel)

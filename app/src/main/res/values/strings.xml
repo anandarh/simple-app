@@ -10,4 +10,6 @@
     <string name="user_profile">User Profile</string>
     <string name="horizontal_dots">•••</string>
     <string name="github">github</string>
+    <string name="search">Cari</string>
+    <string name="search_hint">Masukkan nama pengguna</string>
 </resources>
