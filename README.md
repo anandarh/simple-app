@@ -1,1 +1,1 @@
-GithubUserApp
+Simple android app - Kotlin
