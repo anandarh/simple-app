@@ -15,8 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable"
-        tools:ignore="ContentDescription"
-        app:tint="@color/black" />
+        app:tint="@color/black"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,11 +24,11 @@
         android:layout_marginStart="@dimen/general_padding"
         android:layout_marginTop="@dimen/general_padding"
         android:text="@string/user_profile"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/btnBack"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userImage"
@@ -45,29 +45,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_padding"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userImage" />
-
-    <TextView
-        android:id="@+id/userAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintTop_toBottomOf="@id/userImage" />
 
     <ImageView
         android:id="@+id/icBuilding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_padding"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/userAccount"
+        app:layout_constraintStart_toStartOf="@id/icLocation"
+        app:layout_constraintTop_toBottomOf="@id/btnGithub"
         app:srcCompat="@drawable/ic_building"
         tools:ignore="ContentDescription" />
 
@@ -75,20 +66,25 @@
         android:id="@+id/userCompany"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:gravity="bottom"
-        android:layout_marginTop="@dimen/general_padding"
         android:layout_marginStart="@dimen/text_spacing"
-        app:layout_constraintStart_toEndOf="@+id/icBuilding"
-        app:layout_constraintTop_toBottomOf="@+id/userAccount"
-        android:textColor="@color/black"/>
+        android:layout_marginEnd="@dimen/general_padding"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/icBuilding"
+        app:layout_constraintTop_toTopOf="@id/icBuilding" />
 
     <ImageView
         android:id="@+id/icLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_padding"
-        app:layout_constraintStart_toStartOf="@+id/icBuilding"
-        app:layout_constraintTop_toBottomOf="@+id/icBuilding"
+        app:layout_constraintStart_toStartOf="@id/totalRepo"
+        app:layout_constraintTop_toBottomOf="@id/icBuilding"
         app:srcCompat="@drawable/ic_location"
         tools:ignore="ContentDescription" />
 
@@ -96,113 +92,111 @@
         android:id="@+id/userLocation"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:gravity="bottom"
-        android:layout_marginTop="@dimen/content_padding"
         android:layout_marginStart="@dimen/text_spacing"
-        app:layout_constraintStart_toEndOf="@+id/icLocation"
-        app:layout_constraintTop_toBottomOf="@+id/userCompany"
-        android:textColor="@color/black"/>
+        android:layout_marginTop="@dimen/content_padding"
+        android:layout_marginEnd="@dimen/general_padding"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/icLocation"
+        app:layout_constraintTop_toBottomOf="@id/userCompany" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <TextView
+        android:id="@+id/totalRepo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_padding"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/icLocation">
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/titleRepo"
+        app:layout_constraintTop_toBottomOf="@id/icLocation" />
 
-        <LinearLayout
-            android:id="@+id/containerRepo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/totalRepo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/repositories" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/containerFollowing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/totalFollowers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/followers" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/containerFollower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/totalFollowing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/following" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/titleRepo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/general_padding"
-        android:orientation="horizontal"
+        android:text="@string/repositories"
+        app:layout_constraintEnd_toStartOf="@id/titleFollowers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalRepo" />
+
+    <TextView
+        android:id="@+id/totalFollowers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/titleFollowers"
+        app:layout_constraintTop_toTopOf="@id/totalRepo" />
+
+    <TextView
+        android:id="@+id/titleFollowers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/followers"
+        app:layout_constraintEnd_toStartOf="@id/titleFollowing"
+        app:layout_constraintStart_toEndOf="@id/titleRepo"
+        app:layout_constraintTop_toTopOf="@id/titleRepo" />
+
+
+    <TextView
+        android:id="@+id/totalFollowing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/titleFollowing"
+        app:layout_constraintTop_toTopOf="@id/totalFollowers" />
+
+    <TextView
+        android:id="@+id/titleFollowing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/following"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/titleFollowers"
+        app:layout_constraintTop_toTopOf="@id/titleFollowers" />
+
+    <Button
+        android:id="@+id/btnGithub"
+        style="?android:attr/colorButtonNormal"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_blue_grey"
+        android:paddingHorizontal="30dp"
+        android:text="@string/github"
+        android:visibility="gone"
+        app:cornerRadius="25dp"
+        app:icon="@drawable/ic_github"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@id/userName" />
 
-        <Button
-            android:id="@+id/btnGithub"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue_grey"
-            android:paddingHorizontal="30dp"
-            android:text="@string/github"
-            app:cornerRadius="25dp"
-            app:icon="@drawable/ic_github"
-            style="?android:attr/colorButtonNormal" />
+    <include
+        android:id="@+id/errorContainer"
+        layout="@layout/error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_padding"
+        android:visibility="gone"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintHeight_percent="0.90"
+        app:layout_constraintTop_toBottomOf="@id/btnBack" />
 
-        <Button
-            android:id="@+id/btnShare"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="@dimen/general_padding"
-            android:paddingHorizontal="8dp"
-            android:text="@string/horizontal_dots"
-            android:textColor="@color/black"
-            app:cornerRadius="25dp"
-            android:backgroundTint="@color/white"
-            style="?android:attr/colorButtonNormal"/>
-    </LinearLayout>
+    <include
+        android:id="@+id/loadingContainer"
+        layout="@layout/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_padding"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintHeight_percent="0.90"
+        app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

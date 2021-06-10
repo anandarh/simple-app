@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anandarh.githubuserapp.R
 
 class SplashActivity : AppCompatActivity() {
+    companion object {
+        const val DURATION:Long = 2000
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -16,6 +20,6 @@ class SplashActivity : AppCompatActivity() {
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000)
+        }, DURATION)
     }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.models.GithubResponseModel
@@ -16,8 +17,8 @@ class UsersAdapter(private val data: GithubResponseModel) :
 
     private lateinit var onItemClickListener: ItemClickListener
 
-    private val searchLayout:Int = 0
-    private val defaultLayout:Int = 1
+    private val searchLayout: Int = 0
+    private val defaultLayout: Int = 1
 
     fun setOnItemClickListener(onItemClickListener: ItemClickListener) {
         this.onItemClickListener = onItemClickListener
@@ -41,9 +42,11 @@ class UsersAdapter(private val data: GithubResponseModel) :
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         if (data.userListModel != null) {
             with(data.userListModel.users[position]) {
-                holder.userName.text = name
-                holder.userAccount.text = login
-                holder.totalRepo.text = "$public_repos"
+                holder.apply {
+                    userName.text = name
+                    userAccount.text = login
+                    totalRepo.text = "$public_repos"
+                }
 
                 val imageResource: Int = holder.itemView.context.resources.getIdentifier(
                     avatar_url,
@@ -53,6 +56,18 @@ class UsersAdapter(private val data: GithubResponseModel) :
 
                 Glide.with(holder.itemView.context)
                     .load(imageResource)
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.avatar_placeholder
+                        )
+                    )
+                    .error(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.error_image
+                        )
+                    )
                     .into(holder.userImage)
 
                 holder.itemView.setOnClickListener {
@@ -77,7 +92,8 @@ class UsersAdapter(private val data: GithubResponseModel) :
     override fun getItemCount() =
         if (data.userListModel != null) data.userListModel.users.size else data.items.size
 
-    class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var userImage: CircleImageView = itemView.findViewById(R.id.userImage)
         var userAccount: TextView = itemView.findViewById(R.id.userAccount)
         var userName: TextView = itemView.findViewById(R.id.userName)

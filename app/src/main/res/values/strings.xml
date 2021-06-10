@@ -12,4 +12,5 @@
     <string name="github">github</string>
     <string name="search">Cari</string>
     <string name="search_hint">Masukkan nama pengguna</string>
+    <string name="error_title">TERJADI KESALAHAN</string>
 </resources>

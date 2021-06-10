@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 
-class UserViewModel(private val resourceProvider: ResourceProvider) : ViewModel() {
+class UsersViewModel(private val resourceProvider: ResourceProvider) : ViewModel() {
     private val _userRepository: UserRepository = UserRepository()
     private val _dataState: MutableLiveData<DataState<GithubResponseModel>> by lazy {
         MutableLiveData<DataState<GithubResponseModel>>().also {

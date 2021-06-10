@@ -14,21 +14,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.UsersAdapter
-import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USER
+import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
 import com.anandarh.githubuserapp.databinding.ActivityMainBinding
 import com.anandarh.githubuserapp.models.GithubResponseModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.utilities.ResourceProvider
 import com.anandarh.githubuserapp.viewmodels.UserStateEvent
-import com.anandarh.githubuserapp.viewmodels.UserViewModel
 import com.anandarh.githubuserapp.viewmodels.UserViewModelFactory
+import com.anandarh.githubuserapp.viewmodels.UsersViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var usersAdapter: UsersAdapter
-    private lateinit var viewModel: UserViewModel
+    private lateinit var viewModel: UsersViewModel
     private lateinit var data: GithubResponseModel
 
     private var mQuery: String? = ""
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModelFactory = UserViewModelFactory(ResourceProvider(this))
-        viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UsersViewModel::class.java)
 
         subscribeObserver()
     }
@@ -51,33 +51,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeObserver() {
-        viewModel.dataState.observe(this, { dataState ->
-            when (dataState) {
-                is DataState.Success<GithubResponseModel> -> {
-                    data = dataState.data
-                    displayProgressBar(false)
-                    showData()
+        viewModel.apply {
+            dataState.observe(this@MainActivity, { dataState ->
+                when (dataState) {
+                    is DataState.Success<GithubResponseModel> -> {
+                        data = dataState.data
+                        displayProgressBar(false)
+                        displayData()
+                    }
+                    is DataState.Error -> {
+                        displayProgressBar(false)
+                        displayError(dataState.toString())
+                    }
+                    is DataState.Loading -> {
+                        displayProgressBar(true)
+                    }
                 }
-                is DataState.Error -> {
-                    displayProgressBar(false)
-                    TODO("HANDLE ERROR")
-                }
-                is DataState.Loading -> {
-                    displayProgressBar(true)
-                }
-            }
-        })
+            })
 
-        viewModel.searchQuery.observe(this, {
-            mQuery = it
-        })
+            searchQuery.observe(this@MainActivity, {
+                mQuery = it
+            })
+        }
     }
 
-    private fun displayProgressBar(isDisplayed: Boolean) {
-        binding.progressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
-    }
-
-    private fun showData() {
+    private fun displayData() {
         usersAdapter = UsersAdapter(data)
 
         binding.rvUser.apply {
@@ -88,11 +86,22 @@ class MainActivity : AppCompatActivity() {
         setItemClickAction()
     }
 
+    private fun displayProgressBar(isDisplayed: Boolean) {
+        binding.progressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+    }
+
+    private fun displayError(error: String) {
+        binding.errorContainer.apply {
+            root.visibility = View.VISIBLE
+            errorDesc.text = error
+        }
+    }
+
     private fun setItemClickAction() {
         usersAdapter.setOnItemClickListener(object : UsersAdapter.ItemClickListener {
             override fun onItemClick(username: String) {
                 val objectIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
-                objectIntent.putExtra(EXTRA_USER, username)
+                objectIntent.putExtra(EXTRA_USERNAME, username)
                 startActivity(objectIntent)
             }
         })
@@ -103,36 +112,41 @@ class MainActivity : AppCompatActivity() {
         val searchView = menu.findItem(R.id.search).actionView as SearchView
         val closeButton = searchView.findViewById(R.id.search_close_btn) as ImageView
 
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.queryHint = resources.getString(R.string.search_hint)
-
         menu.findItem(R.id.search)
             .setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                    searchView.onActionViewExpanded()
-                    searchView.setQuery(mQuery, false)
+                    searchView.apply {
+                        onActionViewExpanded()
+                        setQuery(mQuery, false)
+                    }
                     return true
                 }
 
                 override fun onMenuItemActionCollapse(item: MenuItem?) = true
             })
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.setSearchQuery(query.orEmpty())
-                viewModel.setStateEvent(UserStateEvent.GetSearchUserEvent(query.orEmpty()))
-                return true
-            }
+        searchView.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            queryHint = resources.getString(R.string.search_hint)
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    viewModel.setSearchQuery(query.orEmpty())
+                    viewModel.setStateEvent(UserStateEvent.GetSearchUserEvent(query.orEmpty()))
+                    return true
+                }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
+        }
 
         closeButton.setOnClickListener {
-            if (data.items.isNotEmpty()) {
-                viewModel.setSearchQuery("")
-                viewModel.setStateEvent(UserStateEvent.GetUsersEvent)
+            if (!data.items.isNullOrEmpty()) {
+                viewModel.apply {
+                    setSearchQuery("")
+                    setStateEvent(UserStateEvent.GetUsersEvent)
+                }
             }
             searchView.setQuery("", false)
         }
