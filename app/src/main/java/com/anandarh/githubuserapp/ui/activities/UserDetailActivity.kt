@@ -1,26 +1,38 @@
-package com.anandarh.githubuserapp.activities
+package com.anandarh.githubuserapp.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.anandarh.githubuserapp.R
+import com.anandarh.githubuserapp.adapters.FollowPagerAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
 import com.anandarh.githubuserapp.databinding.ActivityUserDetailBinding
 import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.viewmodels.UserDetailViewModel
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class UserDetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityUserDetailBinding
-    private lateinit var viewModel: UserDetailViewModel
 
+    companion object {
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
+    }
+
+    private val viewModel: UserDetailViewModel by viewModels()
+
+    private lateinit var binding: ActivityUserDetailBinding
     private lateinit var data: UserModel
     private lateinit var username: String
 
@@ -31,8 +43,10 @@ class UserDetailActivity : AppCompatActivity() {
 
         username = intent.getStringExtra(EXTRA_USERNAME).orEmpty()
 
-        initializeViewModel()
         backOnClickAction()
+        initializeViewModel()
+        initializeTabView()
+
     }
 
     private fun backOnClickAction() {
@@ -42,8 +56,6 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun initializeViewModel() {
-        viewModel = ViewModelProvider(this).get(UserDetailViewModel::class.java)
-
         viewModel.dataState.observe(this, { dataState ->
             when (dataState) {
                 is DataState.Success<UserModel> -> {
@@ -64,10 +76,18 @@ class UserDetailActivity : AppCompatActivity() {
         viewModel.getUserDetail(username)
     }
 
+    private fun initializeTabView() {
+        binding.viewPager.adapter = FollowPagerAdapter(this)
+
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+    }
+
     @SuppressLint("SetTextI18n")
     private fun displayData() {
         Glide.with(this@UserDetailActivity)
-            .load(data.avatar_url)
+            .load(data.avatarUrl)
             .placeholder(
                 ContextCompat.getDrawable(
                     this@UserDetailActivity,
@@ -86,7 +106,7 @@ class UserDetailActivity : AppCompatActivity() {
             userName.text = data.name
             userCompany.text = data.company
             userLocation.text = data.location
-            totalRepo.text = data.public_repos.toString()
+            totalRepo.text = data.publicRepos.toString()
             totalFollowers.text = data.followers.toString()
             totalFollowing.text = data.following.toString()
         }

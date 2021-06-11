@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.UserDetailActivity">
+    tools:context=".ui.activities.UserDetailActivity">
 
     <ImageView
         android:id="@+id/btnBack"
@@ -46,11 +46,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_padding"
         android:textColor="@color/black"
+        android:text="Text"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userImage" />
+
+    <Button
+        android:id="@+id/btnGithub"
+        style="?android:attr/colorButtonNormal"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_blue_grey"
+        android:paddingHorizontal="30dp"
+        android:text="@string/github"
+        android:visibility="gone"
+        app:cornerRadius="25dp"
+        app:icon="@drawable/ic_github"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userName" />
 
     <ImageView
         android:id="@+id/icBuilding"
@@ -143,7 +159,6 @@
         app:layout_constraintStart_toEndOf="@id/titleRepo"
         app:layout_constraintTop_toTopOf="@id/titleRepo" />
 
-
     <TextView
         android:id="@+id/totalFollowing"
         android:layout_width="wrap_content"
@@ -162,20 +177,26 @@
         app:layout_constraintStart_toEndOf="@id/titleFollowers"
         app:layout_constraintTop_toTopOf="@id/titleFollowers" />
 
-    <Button
-        android:id="@+id/btnGithub"
-        style="?android:attr/colorButtonNormal"
-        android:layout_width="210dp"
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/dark_blue_grey"
-        android:paddingHorizontal="30dp"
-        android:text="@string/github"
-        android:visibility="gone"
-        app:cornerRadius="25dp"
-        app:icon="@drawable/ic_github"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userName" />
+        android:layout_marginTop="@dimen/multi_margin"
+        android:background="@color/dark_blue_grey"
+        app:layout_constraintTop_toBottomOf="@id/titleRepo"
+        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorColor="@color/teal_200"
+        app:tabTextColor="@android:color/white"
+        app:tabSelectedTextColor="@color/teal_200"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/tabs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constrainedHeight="true" />
 
     <include
         android:id="@+id/errorContainer"
@@ -194,6 +215,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_padding"
+        android:visibility="gone"
         app:layout_constrainedHeight="true"
         app:layout_constraintHeight_percent="0.90"
         app:layout_constraintTop_toBottomOf="@id/btnBack" />

@@ -1,4 +1,4 @@
-package com.anandarh.githubuserapp.activities
+package com.anandarh.githubuserapp.ui.activities
 
 import android.app.SearchManager
 import android.content.Context
@@ -13,7 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anandarh.githubuserapp.R
-import com.anandarh.githubuserapp.adapters.UsersAdapter
+import com.anandarh.githubuserapp.adapters.UsersRecyclerViewAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
 import com.anandarh.githubuserapp.databinding.ActivityMainBinding
 import com.anandarh.githubuserapp.models.GithubResponseModel
@@ -27,7 +27,7 @@ import com.anandarh.githubuserapp.viewmodels.UsersViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var usersAdapter: UsersAdapter
+    private lateinit var usersAdapter: UsersRecyclerViewAdapter
     private lateinit var viewModel: UsersViewModel
     private lateinit var data: GithubResponseModel
 
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayData() {
-        usersAdapter = UsersAdapter(data)
+        usersAdapter = UsersRecyclerViewAdapter(data)
 
         binding.rvUser.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setItemClickAction() {
-        usersAdapter.setOnItemClickListener(object : UsersAdapter.ItemClickListener {
+        usersAdapter.setOnItemClickListener(object : UsersRecyclerViewAdapter.ItemClickListener {
             override fun onItemClick(username: String) {
                 val objectIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
                 objectIntent.putExtra(EXTRA_USERNAME, username)

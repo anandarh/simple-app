@@ -17,27 +17,29 @@ import kotlinx.coroutines.flow.flow
 class UserRepository {
 
     companion object {
-        const val DURATION:Long = 1000
+        const val DURATION: Long = 1000
     }
 
     private val apiService: GithubApiService = GithubApiService()
 
-    suspend fun getLocalUsers(resourceProvider: ResourceProvider): Flow<DataState<GithubResponseModel>> = flow {
-        emit(DataState.Loading)
-        delay(DURATION)
-        try {
-            val gson = Gson()
-            val jsonString = Utils().getJsonFromAssets(resourceProvider.getContext(), JSON_ASSET_NAME)
-            val localResponse = gson.fromJson(
-                jsonString,
-                UserListModel::class.java
-            )
-            val data = GithubResponseModel(false, listOf(), 0, localResponse)
-            emit(DataState.Success(data))
-        } catch (e: Exception) {
-            emit(DataState.Error(e))
+    suspend fun getLocalUsers(resourceProvider: ResourceProvider): Flow<DataState<GithubResponseModel>> =
+        flow {
+            emit(DataState.Loading)
+            delay(DURATION)
+            try {
+                val gson = Gson()
+                val jsonString =
+                    Utils().getJsonFromAssets(resourceProvider.getContext(), JSON_ASSET_NAME)
+                val localResponse = gson.fromJson(
+                    jsonString,
+                    UserListModel::class.java
+                )
+                val data = GithubResponseModel(false, listOf(), 0, localResponse)
+                emit(DataState.Success(data))
+            } catch (e: Exception) {
+                emit(DataState.Error(e))
+            }
         }
-    }
 
     suspend fun getUsers(username: String): Flow<DataState<GithubResponseModel>> = flow {
         emit(DataState.Loading)

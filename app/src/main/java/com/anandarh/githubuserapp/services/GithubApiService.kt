@@ -14,12 +14,12 @@ interface GithubApiService {
     @GET("search/users")
     suspend fun searchUser(
         @Query("q") username: String
-    ) : GithubResponseModel
+    ): GithubResponseModel
 
     @GET("users/{username}")
     suspend fun detailUser(
         @Path("username") username: String
-    ) : UserModel
+    ): UserModel
 
     companion object {
         operator fun invoke(): GithubApiService {

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class UserModel(
     @SerializedName("avatar_url")
-    val avatar_url: String?,
+    val avatarUrl: String?,
 
     @SerializedName("bio")
     val bio: String?,
@@ -18,37 +18,37 @@ data class UserModel(
     val company: String?,
 
     @SerializedName("created_at")
-    val created_at: String?,
+    val createdAt: String?,
 
     @SerializedName("email")
     val email: String?,
 
     @SerializedName("events_url")
-    val events_url: String?,
+    val eventsUrl: String?,
 
     @SerializedName("followers")
     val followers: Int,
 
     @SerializedName("followers_url")
-    val followers_url: String?,
+    val followersUrl: String?,
 
     @SerializedName("following")
     val following: Int,
 
     @SerializedName("following_url")
-    val following_url: String?,
+    val followingUrl: String?,
 
     @SerializedName("gists_url")
-    val gists_url: String?,
+    val gistsUrl: String?,
 
     @SerializedName("gravatar_id")
-    val gravatar_id: String?,
+    val gravatarId: String?,
 
     @SerializedName("hireable")
     val hireable: String?,
 
     @SerializedName("html_url")
-    val html_url: String?,
+    val htmlUrl: String?,
 
     @SerializedName("id")
     val id: Int,
@@ -63,40 +63,40 @@ data class UserModel(
     val name: String?,
 
     @SerializedName("node_id")
-    val node_id: String?,
+    val nodeId: String?,
 
     @SerializedName("organizations_url")
-    val organizations_url: String?,
+    val organizationsUrl: String?,
 
     @SerializedName("public_gists")
-    val public_gists: Int,
+    val publicGists: Int,
 
     @SerializedName("public_repos")
-    val public_repos: Int,
+    val publicRepos: Int,
 
     @SerializedName("received_events_url")
-    val received_events_url: String?,
+    val receivedEventsUrl: String?,
 
     @SerializedName("repos_url")
-    val repos_url: String?,
+    val reposUrl: String?,
 
     @SerializedName("site_admin")
-    val site_admin: Boolean,
+    val siteAdmin: Boolean,
 
     @SerializedName("starred_url")
-    val starred_url: String?,
+    val starredUrl: String?,
 
     @SerializedName("subscriptions_url")
-    val subscriptions_url: String?,
+    val subscriptionsUrl: String?,
 
     @SerializedName("twitter_username")
-    val twitter_username: String?,
+    val twitterUsername: String?,
 
     @SerializedName("type")
     val type: String?,
 
     @SerializedName("updated_at")
-    val updated_at: String?,
+    val updatedAt: String?,
 
     @SerializedName("url")
     val url: String?
@@ -137,37 +137,37 @@ data class UserModel(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(avatar_url)
+        parcel.writeString(avatarUrl)
         parcel.writeString(bio)
         parcel.writeString(blog)
         parcel.writeString(company)
-        parcel.writeString(created_at)
+        parcel.writeString(createdAt)
         parcel.writeString(email)
-        parcel.writeString(events_url)
+        parcel.writeString(eventsUrl)
         parcel.writeInt(followers)
-        parcel.writeString(followers_url)
+        parcel.writeString(followersUrl)
         parcel.writeInt(following)
-        parcel.writeString(following_url)
-        parcel.writeString(gists_url)
-        parcel.writeString(gravatar_id)
+        parcel.writeString(followingUrl)
+        parcel.writeString(gistsUrl)
+        parcel.writeString(gravatarId)
         parcel.writeString(hireable)
-        parcel.writeString(html_url)
+        parcel.writeString(htmlUrl)
         parcel.writeInt(id)
         parcel.writeString(location)
         parcel.writeString(login)
         parcel.writeString(name)
-        parcel.writeString(node_id)
-        parcel.writeString(organizations_url)
-        parcel.writeInt(public_gists)
-        parcel.writeInt(public_repos)
-        parcel.writeString(received_events_url)
-        parcel.writeString(repos_url)
-        parcel.writeBoolean(site_admin)
-        parcel.writeString(starred_url)
-        parcel.writeString(subscriptions_url)
-        parcel.writeString(twitter_username)
+        parcel.writeString(nodeId)
+        parcel.writeString(organizationsUrl)
+        parcel.writeInt(publicGists)
+        parcel.writeInt(publicRepos)
+        parcel.writeString(receivedEventsUrl)
+        parcel.writeString(reposUrl)
+        parcel.writeBoolean(siteAdmin)
+        parcel.writeString(starredUrl)
+        parcel.writeString(subscriptionsUrl)
+        parcel.writeString(twitterUsername)
         parcel.writeString(type)
-        parcel.writeString(updated_at)
+        parcel.writeString(updatedAt)
         parcel.writeString(url)
     }
 

@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class UsersAdapter(private val data: GithubResponseModel) :
-    RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
+class UsersRecyclerViewAdapter(private val data: GithubResponseModel) :
+    RecyclerView.Adapter<UsersRecyclerViewAdapter.UserViewHolder>() {
 
     private lateinit var onItemClickListener: ItemClickListener
 
@@ -45,11 +45,11 @@ class UsersAdapter(private val data: GithubResponseModel) :
                 holder.apply {
                     userName.text = name
                     userAccount.text = login
-                    totalRepo.text = "$public_repos"
+                    totalRepo.text = "$publicRepos"
                 }
 
                 val imageResource: Int = holder.itemView.context.resources.getIdentifier(
-                    avatar_url,
+                    avatarUrl,
                     null,
                     holder.itemView.context.packageName
                 )
@@ -80,6 +80,18 @@ class UsersAdapter(private val data: GithubResponseModel) :
 
                 Glide.with(holder.itemView.context)
                     .load(avatarUrl)
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.avatar_placeholder
+                        )
+                    )
+                    .error(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.error_image
+                        )
+                    )
                     .into(holder.userImage)
 
                 holder.itemView.setOnClickListener {

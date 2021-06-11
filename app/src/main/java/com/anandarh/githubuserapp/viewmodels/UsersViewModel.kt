@@ -29,7 +29,7 @@ class UsersViewModel(private val resourceProvider: ResourceProvider) : ViewModel
         get() = _searchQuery
 
     fun setSearchQuery(query: String) {
-            _searchQuery.postValue(query)
+        _searchQuery.postValue(query)
     }
 
     fun setStateEvent(userStateEvent: UserStateEvent) {

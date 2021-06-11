@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="multi_margin">32dp</dimen>
     <dimen name="general_padding">16dp</dimen>
     <dimen name="content_padding">10dp</dimen>
     <dimen name="text_icon_padding">3dp</dimen>
