@@ -122,7 +122,10 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun displayProgressBar(isDisplayed: Boolean) {
-        binding.loadingContainer.root.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+        binding.loadingContainer.apply {
+            root.background = ContextCompat.getDrawable(this@UserDetailActivity, R.color.dark_blue_grey)
+            root.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+        }
     }
 
     private fun dataOnClickAction() {

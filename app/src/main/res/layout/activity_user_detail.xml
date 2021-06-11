@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_blue_grey"
     tools:context=".ui.activities.UserDetailActivity">
 
     <ImageView
@@ -15,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable"
-        app:tint="@color/black"
+        app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_marginStart="@dimen/general_padding"
         android:layout_marginTop="@dimen/general_padding"
         android:text="@string/user_profile"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/btnBack"
@@ -36,6 +37,8 @@
         android:layout_height="100dp"
         android:layout_marginTop="80dp"
         android:src="@drawable/user1"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/btnBack" />
@@ -45,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_padding"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:text="Text"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -58,12 +61,14 @@
         style="?android:attr/colorButtonNormal"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/dark_blue_grey"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue_grey"
         android:paddingHorizontal="30dp"
         android:text="@string/github"
         android:visibility="gone"
         app:cornerRadius="25dp"
         app:icon="@drawable/ic_github"
+        app:iconTint="@color/dark_blue_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userName" />
@@ -76,7 +81,8 @@
         app:layout_constraintStart_toStartOf="@id/icLocation"
         app:layout_constraintTop_toBottomOf="@id/btnGithub"
         app:srcCompat="@drawable/ic_building"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/userCompany"
@@ -87,7 +93,7 @@
         android:ellipsize="end"
         android:gravity="bottom"
         android:maxLines="1"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -102,7 +108,8 @@
         app:layout_constraintStart_toStartOf="@id/totalRepo"
         app:layout_constraintTop_toBottomOf="@id/icBuilding"
         app:srcCompat="@drawable/ic_location"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        app:tint="@color/white"/>
 
     <TextView
         android:id="@+id/userLocation"
@@ -114,7 +121,7 @@
         android:ellipsize="end"
         android:gravity="bottom"
         android:maxLines="1"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -127,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/general_padding"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/titleRepo"
         app:layout_constraintTop_toBottomOf="@id/icLocation" />
@@ -137,6 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/repositories"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@id/titleFollowers"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/totalRepo" />
@@ -145,7 +153,7 @@
         android:id="@+id/totalFollowers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/titleFollowers"
         app:layout_constraintTop_toTopOf="@id/totalRepo" />
@@ -155,6 +163,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/followers"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@id/titleFollowing"
         app:layout_constraintStart_toEndOf="@id/titleRepo"
         app:layout_constraintTop_toTopOf="@id/titleRepo" />
@@ -163,7 +172,7 @@
         android:id="@+id/totalFollowing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/titleFollowing"
         app:layout_constraintTop_toTopOf="@id/totalFollowers" />
@@ -173,6 +182,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/following"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/titleFollowers"
         app:layout_constraintTop_toTopOf="@id/titleFollowers" />
@@ -194,6 +204,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tabs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constrainedHeight="true" />
@@ -213,11 +224,10 @@
         android:id="@+id/loadingContainer"
         layout="@layout/loading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/content_padding"
-        android:visibility="gone"
         app:layout_constrainedHeight="true"
-        app:layout_constraintHeight_percent="0.90"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBack" />
 
 
