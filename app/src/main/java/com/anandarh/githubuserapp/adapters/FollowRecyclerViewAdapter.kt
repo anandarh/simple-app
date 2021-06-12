@@ -6,10 +6,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.databinding.ItemUserFollowBinding
-import com.anandarh.githubuserapp.models.UserListModel
+import com.anandarh.githubuserapp.models.GithubItemModel
 import com.bumptech.glide.Glide
 
-class FollowRecyclerViewAdapter(private val data: UserListModel) :
+class FollowRecyclerViewAdapter(private val data: ArrayList<GithubItemModel>) :
     RecyclerView.Adapter<FollowRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -23,7 +23,7 @@ class FollowRecyclerViewAdapter(private val data: UserListModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
-            with(data.users[position]) {
+            with(data[position]) {
                 userAccount.text = login
 
                 Glide.with(holder.itemView.context)
@@ -45,7 +45,7 @@ class FollowRecyclerViewAdapter(private val data: UserListModel) :
         }
     }
 
-    override fun getItemCount() = data.users.size
+    override fun getItemCount() = data.size
 
     inner class ViewHolder(val binding: ItemUserFollowBinding) :
         RecyclerView.ViewHolder(binding.root)

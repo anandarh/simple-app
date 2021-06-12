@@ -15,6 +15,7 @@ import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERN
 import com.anandarh.githubuserapp.databinding.ActivityUserDetailBinding
 import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.utilities.DataState
+import com.anandarh.githubuserapp.viewmodels.FollowViewModel
 import com.anandarh.githubuserapp.viewmodels.UserDetailViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
@@ -31,6 +32,7 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private val viewModel: UserDetailViewModel by viewModels()
+    private val viewModelFollow: FollowViewModel by viewModels()
 
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var data: UserModel
@@ -65,7 +67,7 @@ class UserDetailActivity : AppCompatActivity() {
                 }
                 is DataState.Error -> {
                     displayProgressBar(false)
-                    displayError(dataState.toString())
+                    displayError(dataState.exception.toString())
                 }
                 is DataState.Loading -> {
                     displayProgressBar(true)
@@ -74,6 +76,7 @@ class UserDetailActivity : AppCompatActivity() {
         })
 
         viewModel.getUserDetail(username)
+        viewModelFollow.getFollowersFollowing(username)
     }
 
     private fun initializeTabView() {
@@ -123,7 +126,8 @@ class UserDetailActivity : AppCompatActivity() {
 
     private fun displayProgressBar(isDisplayed: Boolean) {
         binding.loadingContainer.apply {
-            root.background = ContextCompat.getDrawable(this@UserDetailActivity, R.color.dark_blue_grey)
+            root.background =
+                ContextCompat.getDrawable(this@UserDetailActivity, R.color.dark_blue_grey)
             root.visibility = if (isDisplayed) View.VISIBLE else View.GONE
         }
     }

@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     is DataState.Error -> {
                         displayProgressBar(false)
-                        displayError(dataState.toString())
+                        displayError(dataState.exception.toString())
                     }
                     is DataState.Loading -> {
                         displayProgressBar(true)

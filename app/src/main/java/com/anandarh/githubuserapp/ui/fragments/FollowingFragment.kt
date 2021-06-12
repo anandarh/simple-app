@@ -7,59 +7,55 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.FollowRecyclerViewAdapter
-import com.anandarh.githubuserapp.databinding.FragmentFollowingBinding
-import com.anandarh.githubuserapp.models.UserListModel
-import com.anandarh.githubuserapp.models.UserModel
+import com.anandarh.githubuserapp.databinding.FragmentFollowersFollowingBinding
+import com.anandarh.githubuserapp.models.GithubItemModel
+import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.viewmodels.FollowViewModel
 
-class FollowingFragment : Fragment(R.layout.fragment_following) {
+class FollowingFragment : Fragment(R.layout.fragment_followers_following) {
 
-    private lateinit var binding: FragmentFollowingBinding
-    private lateinit var mAdapter: FollowRecyclerViewAdapter
+    private lateinit var binding: FragmentFollowersFollowingBinding
 
     private val viewModel: FollowViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentFollowingBinding.bind(view)
+        binding = FragmentFollowersFollowingBinding.bind(view)
 
-        val data = UserModel(
-            "https://avatars.githubusercontent.com/u/1024025?v=4",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            0,
-            null,
-            0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            0,
-            null,
-            "torvalds",
-            null, null, null, 0, 0,
-            null,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null, null, null
-        )
+        viewModel.dataStateFollowing.observe(viewLifecycleOwner, { dataState ->
+            when (dataState) {
+                is DataState.Success<ArrayList<GithubItemModel>> -> {
+                    displayProgressBar(false)
+                    displayData(dataState.data)
+                }
 
-        val listData: List<UserModel> = listOf(data)
+                is DataState.Error -> {
+                    displayProgressBar(false)
+                    displayError(dataState.exception.toString())
+                }
 
-        mAdapter = FollowRecyclerViewAdapter(UserListModel(listData))
+                is DataState.Loading -> {
+                    displayProgressBar(true)
+                }
+            }
+        })
+    }
+
+    private fun displayData(data: ArrayList<GithubItemModel>) {
         binding.rvUser.apply {
-            adapter = mAdapter
+            adapter = FollowRecyclerViewAdapter(data)
             layoutManager = LinearLayoutManager(this@FollowingFragment.context)
         }
     }
 
+    private fun displayProgressBar(isDisplayed: Boolean) {
+        binding.progressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+    }
 
+    private fun displayError(error: String) {
+        binding.errorContainer.apply {
+            root.visibility = View.VISIBLE
+            errorDesc.text = error
+        }
+    }
 }

@@ -112,7 +112,7 @@
         {
             "login": "kamranahmedse",
             "name": "Kamran Ahmed",
-            "avatar_url_url": "@drawable/user12",
+            "avatar_url": "@drawable/user12",
             "company": "Tradeling",
             "location": "Berlin, Germany",
             "public_repos": 75,

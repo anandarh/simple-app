@@ -1,6 +1,7 @@
 package com.anandarh.githubuserapp.repositories
 
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.JSON_ASSET_NAME
+import com.anandarh.githubuserapp.models.GithubItemModel
 import com.anandarh.githubuserapp.models.GithubResponseModel
 import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.models.UserModel
@@ -57,6 +58,20 @@ class UserRepository {
         delay(DURATION)
         try {
             val githubResponse = apiService.detailUser(username)
+            emit(DataState.Success(githubResponse))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getFollow(
+        username: String,
+        followType: String
+    ): Flow<DataState<ArrayList<GithubItemModel>>> = flow {
+        emit(DataState.Loading)
+        delay(DURATION)
+        try {
+            val githubResponse = apiService.getFollow(username, followType)
             emit(DataState.Success(githubResponse))
         } catch (e: Exception) {
             emit(DataState.Error(e))
