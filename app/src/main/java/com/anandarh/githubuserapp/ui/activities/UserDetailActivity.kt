@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -45,15 +46,18 @@ class UserDetailActivity : AppCompatActivity() {
 
         username = intent.getStringExtra(EXTRA_USERNAME).orEmpty()
 
-        backOnClickAction()
+        headerButtonAction()
         initializeViewModel()
         initializeTabView()
 
     }
 
-    private fun backOnClickAction() {
+    private fun headerButtonAction() {
         binding.btnBack.setOnClickListener {
             finish()
+        }
+        binding.btnLang.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
     }
 

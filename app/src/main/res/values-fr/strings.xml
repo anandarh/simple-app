@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Github User App</string>
+    <string name="space_repositories"><![CDATA[ référentiels]]></string>
+    <string name="center_dot">·</string>
+    <string name="repositories">Référentiels</string>
+    <string name="followers">Abonnés</string>
+    <string name="following">Abonnements</string>
+    <string name="user_profile">Profil</string>
+    <string name="horizontal_dots">•••</string>
+    <string name="github">github</string>
+    <string name="search">Rechercher</string>
+    <string name="search_hint">Nom d\'utilisateur</string>
+    <string name="error_title">Quelque chose ne va pas</string>
+</resources>

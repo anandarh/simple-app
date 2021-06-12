@@ -31,11 +31,23 @@
         app:layout_constraintStart_toEndOf="@id/btnBack"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/btnLang"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginHorizontal="@dimen/general_padding"
+        android:layout_marginTop="@dimen/general_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_language_24"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/user1"
         app:civ_border_color="@color/white"
         app:civ_border_width="1dp"
