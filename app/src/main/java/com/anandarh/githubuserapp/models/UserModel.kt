@@ -1,9 +1,11 @@
 package com.anandarh.githubuserapp.models
 
-import android.os.Parcel
+
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserModel(
     @SerializedName("avatar_url")
     val avatarUrl: String?,
@@ -80,6 +82,8 @@ data class UserModel(
     @SerializedName("repos_url")
     val reposUrl: String?,
 
+    val score: Double,
+
     @SerializedName("site_admin")
     val siteAdmin: Boolean,
 
@@ -100,88 +104,4 @@ data class UserModel(
 
     @SerializedName("url")
     val url: String?
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readBoolean(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(avatarUrl)
-        parcel.writeString(bio)
-        parcel.writeString(blog)
-        parcel.writeString(company)
-        parcel.writeString(createdAt)
-        parcel.writeString(email)
-        parcel.writeString(eventsUrl)
-        parcel.writeInt(followers)
-        parcel.writeString(followersUrl)
-        parcel.writeInt(following)
-        parcel.writeString(followingUrl)
-        parcel.writeString(gistsUrl)
-        parcel.writeString(gravatarId)
-        parcel.writeString(hireable)
-        parcel.writeString(htmlUrl)
-        parcel.writeInt(id)
-        parcel.writeString(location)
-        parcel.writeString(login)
-        parcel.writeString(name)
-        parcel.writeString(nodeId)
-        parcel.writeString(organizationsUrl)
-        parcel.writeInt(publicGists)
-        parcel.writeInt(publicRepos)
-        parcel.writeString(receivedEventsUrl)
-        parcel.writeString(reposUrl)
-        parcel.writeBoolean(siteAdmin)
-        parcel.writeString(starredUrl)
-        parcel.writeString(subscriptionsUrl)
-        parcel.writeString(twitterUsername)
-        parcel.writeString(type)
-        parcel.writeString(updatedAt)
-        parcel.writeString(url)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<UserModel> {
-        override fun createFromParcel(parcel: Parcel): UserModel {
-            return UserModel(parcel)
-        }
-
-        override fun newArray(size: Int): Array<UserModel?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+) : Parcelable

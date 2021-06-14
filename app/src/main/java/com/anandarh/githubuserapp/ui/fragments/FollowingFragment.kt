@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.FollowRecyclerViewAdapter
 import com.anandarh.githubuserapp.databinding.FragmentFollowersFollowingBinding
-import com.anandarh.githubuserapp.models.GithubItemModel
+import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.viewmodels.FollowViewModel
 
@@ -24,7 +24,7 @@ class FollowingFragment : Fragment(R.layout.fragment_followers_following) {
 
         viewModel.dataStateFollowing.observe(viewLifecycleOwner, { dataState ->
             when (dataState) {
-                is DataState.Success<ArrayList<GithubItemModel>> -> {
+                is DataState.Success<ArrayList<UserModel>> -> {
                     displayProgressBar(false)
                     displayData(dataState.data)
                 }
@@ -41,7 +41,7 @@ class FollowingFragment : Fragment(R.layout.fragment_followers_following) {
         })
     }
 
-    private fun displayData(data: ArrayList<GithubItemModel>) {
+    private fun displayData(data: ArrayList<UserModel>) {
         binding.rvUser.apply {
             adapter = FollowRecyclerViewAdapter(data)
             layoutManager = LinearLayoutManager(this@FollowingFragment.context)

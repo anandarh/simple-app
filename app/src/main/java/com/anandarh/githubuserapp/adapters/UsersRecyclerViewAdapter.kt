@@ -3,114 +3,67 @@ package com.anandarh.githubuserapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anandarh.githubuserapp.R
-import com.anandarh.githubuserapp.models.GithubResponseModel
-import com.bumptech.glide.Glide
-import de.hdodenhof.circleimageview.CircleImageView
+import com.anandarh.githubuserapp.databinding.ItemUserBinding
+import com.anandarh.githubuserapp.models.UserListModel
+import com.squareup.picasso.Picasso
 
 
-class UsersRecyclerViewAdapter(private val data: GithubResponseModel) :
+class UsersRecyclerViewAdapter(private val data: UserListModel) :
     RecyclerView.Adapter<UsersRecyclerViewAdapter.UserViewHolder>() {
 
     private lateinit var onItemClickListener: ItemClickListener
-
-    private val searchLayout: Int = 0
-    private val defaultLayout: Int = 1
 
     fun setOnItemClickListener(onItemClickListener: ItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (data.userListModel != null) defaultLayout else searchLayout
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val binding = if (viewType == searchLayout) {
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_user_search, parent, false)
-        } else {
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_user, parent, false)
-        }
+        val binding = ItemUserBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return UserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        if (data.userListModel != null) {
-            with(data.userListModel.users[position]) {
-                holder.apply {
+        with(data.items[position]) {
+
+            holder.binding.apply {
+                if (!name.isNullOrEmpty()) {
                     userName.text = name
                     userAccount.text = login
                     totalRepo.text = "$publicRepos"
+                    repoIcon.visibility = View.VISIBLE
+                    totalRepo.visibility = View.VISIBLE
+                    titleRepo.visibility = View.VISIBLE
+                } else {
+                    userName.text = login
+                    repoIcon.visibility = View.GONE
+                    totalRepo.visibility = View.GONE
+                    titleRepo.visibility = View.GONE
                 }
 
-                val imageResource: Int = holder.itemView.context.resources.getIdentifier(
-                    avatarUrl,
-                    null,
-                    holder.itemView.context.packageName
-                )
-
-                Glide.with(holder.itemView.context)
-                    .load(imageResource)
-                    .placeholder(
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.avatar_placeholder
-                        )
-                    )
-                    .error(
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.error_image
-                        )
-                    )
-                    .into(holder.userImage)
-
-                holder.itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(login.orEmpty())
-                }
-            }
-        } else {
-            with(data.items[position]) {
-                holder.userAccount.text = login
-
-                Glide.with(holder.itemView.context)
+                Picasso.get()
                     .load(avatarUrl)
-                    .placeholder(
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.avatar_placeholder
-                        )
-                    )
-                    .error(
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.error_image
-                        )
-                    )
-                    .into(holder.userImage)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .error(R.drawable.error_image)
+                    .into(userImage)
+            }
 
-                holder.itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(login)
-                }
+            holder.itemView.setOnClickListener {
+                onItemClickListener.onItemClick(login.orEmpty())
             }
         }
     }
 
     override fun getItemCount() =
-        if (data.userListModel != null) data.userListModel.users.size else data.items.size
+        data.items.size
 
 
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var userImage: CircleImageView = itemView.findViewById(R.id.userImage)
-        var userAccount: TextView = itemView.findViewById(R.id.userAccount)
-        var userName: TextView = itemView.findViewById(R.id.userName)
-        var totalRepo: TextView = itemView.findViewById(R.id.totalRepo)
-    }
+    inner class UserViewHolder(val binding: ItemUserBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     interface ItemClickListener {
         fun onItemClick(username: String)

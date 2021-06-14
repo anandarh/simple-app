@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anandarh.githubuserapp.models.GithubItemModel
+import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.repositories.UserRepository
 import com.anandarh.githubuserapp.utilities.DataState
 import kotlinx.coroutines.flow.launchIn
@@ -19,15 +19,15 @@ class FollowViewModel : ViewModel() {
 
 
     private val _repository: UserRepository = UserRepository()
-    private val _dataStateFollowers: MutableLiveData<DataState<ArrayList<GithubItemModel>>> =
+    private val _dataStateFollowers: MutableLiveData<DataState<ArrayList<UserModel>>> =
         MutableLiveData()
-    private val _dataStateFollowing: MutableLiveData<DataState<ArrayList<GithubItemModel>>> =
+    private val _dataStateFollowing: MutableLiveData<DataState<ArrayList<UserModel>>> =
         MutableLiveData()
 
 
-    val dataStateFollowers: LiveData<DataState<ArrayList<GithubItemModel>>>
+    val dataStateFollowers: LiveData<DataState<ArrayList<UserModel>>>
         get() = _dataStateFollowers
-    val dataStateFollowing: LiveData<DataState<ArrayList<GithubItemModel>>>
+    val dataStateFollowing: LiveData<DataState<ArrayList<UserModel>>>
         get() = _dataStateFollowing
 
 

@@ -16,7 +16,7 @@ import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.UsersRecyclerViewAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
 import com.anandarh.githubuserapp.databinding.ActivityMainBinding
-import com.anandarh.githubuserapp.models.GithubResponseModel
+import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.utilities.ResourceProvider
 import com.anandarh.githubuserapp.viewmodels.UserStateEvent
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var usersAdapter: UsersRecyclerViewAdapter
     private lateinit var viewModel: UsersViewModel
-    private lateinit var data: GithubResponseModel
+    private lateinit var data: UserListModel
 
     private var mQuery: String? = ""
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.apply {
             dataState.observe(this@MainActivity, { dataState ->
                 when (dataState) {
-                    is DataState.Success<GithubResponseModel> -> {
+                    is DataState.Success<UserListModel> -> {
                         data = dataState.data
                         displayProgressBar(false)
                         displayData()

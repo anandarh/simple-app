@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anandarh.githubuserapp.models.GithubResponseModel
+import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.repositories.UserRepository
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.utilities.ResourceProvider
@@ -15,14 +15,14 @@ import kotlinx.coroutines.launch
 
 class UsersViewModel(private val resourceProvider: ResourceProvider) : ViewModel() {
     private val _userRepository: UserRepository = UserRepository()
-    private val _dataState: MutableLiveData<DataState<GithubResponseModel>> by lazy {
-        MutableLiveData<DataState<GithubResponseModel>>().also {
+    private val _dataState: MutableLiveData<DataState<UserListModel>> by lazy {
+        MutableLiveData<DataState<UserListModel>>().also {
             setStateEvent(UserStateEvent.GetUsersEvent)
         }
     }
     private val _searchQuery: MutableLiveData<String> = MutableLiveData()
 
-    val dataState: LiveData<DataState<GithubResponseModel>>
+    val dataState: LiveData<DataState<UserListModel>>
         get() = _dataState
 
     val searchQuery: LiveData<String>

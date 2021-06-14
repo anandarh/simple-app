@@ -1,8 +1,6 @@
 package com.anandarh.githubuserapp.repositories
 
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.JSON_ASSET_NAME
-import com.anandarh.githubuserapp.models.GithubItemModel
-import com.anandarh.githubuserapp.models.GithubResponseModel
 import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.services.GithubApiService
@@ -23,7 +21,7 @@ class UserRepository {
 
     private val apiService: GithubApiService = GithubApiService()
 
-    suspend fun getLocalUsers(resourceProvider: ResourceProvider): Flow<DataState<GithubResponseModel>> =
+    suspend fun getLocalUsers(resourceProvider: ResourceProvider): Flow<DataState<UserListModel>> =
         flow {
             emit(DataState.Loading)
             delay(DURATION)
@@ -31,18 +29,17 @@ class UserRepository {
                 val gson = Gson()
                 val jsonString =
                     Utils().getJsonFromAssets(resourceProvider.getContext(), JSON_ASSET_NAME)
-                val localResponse = gson.fromJson(
+                val data = gson.fromJson(
                     jsonString,
                     UserListModel::class.java
                 )
-                val data = GithubResponseModel(false, listOf(), 0, localResponse)
                 emit(DataState.Success(data))
             } catch (e: Exception) {
                 emit(DataState.Error(e))
             }
         }
 
-    suspend fun getUsers(username: String): Flow<DataState<GithubResponseModel>> = flow {
+    suspend fun getUsers(username: String): Flow<DataState<UserListModel>> = flow {
         emit(DataState.Loading)
         delay(DURATION)
         try {
@@ -67,7 +64,7 @@ class UserRepository {
     suspend fun getFollow(
         username: String,
         followType: String
-    ): Flow<DataState<ArrayList<GithubItemModel>>> = flow {
+    ): Flow<DataState<ArrayList<UserModel>>> = flow {
         emit(DataState.Loading)
         delay(DURATION)
         try {

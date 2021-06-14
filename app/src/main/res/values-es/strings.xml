@@ -2,12 +2,10 @@
 <resources>
     <string name="app_name">Github User App</string>
     <string name="space_repositories"><![CDATA[ repositorios]]></string>
-    <string name="center_dot">·</string>
     <string name="repositories">Repositorios</string>
     <string name="followers">Seguidores</string>
     <string name="following">Seguidos</string>
     <string name="user_profile">Perfil</string>
-    <string name="horizontal_dots">•••</string>
     <string name="github">github</string>
     <string name="search">Buscar</string>
     <string name="search_hint">Nombre de usuario</string>

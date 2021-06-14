@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.anandarh.githubuserapp.BuildConfig
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.FollowPagerAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
@@ -18,8 +19,8 @@ import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.viewmodels.FollowViewModel
 import com.anandarh.githubuserapp.viewmodels.UserDetailViewModel
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 
 
 class UserDetailActivity : AppCompatActivity() {
@@ -93,29 +94,20 @@ class UserDetailActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun displayData() {
-        Glide.with(this@UserDetailActivity)
-            .load(data.avatarUrl)
-            .placeholder(
-                ContextCompat.getDrawable(
-                    this@UserDetailActivity,
-                    R.drawable.avatar_placeholder
-                )
-            )
-            .error(
-                ContextCompat.getDrawable(
-                    this@UserDetailActivity,
-                    R.drawable.error_image
-                )
-            )
-            .into(binding.userImage)
-
         binding.apply {
             userName.text = data.name
+            userAccount.text = data.login
             userCompany.text = data.company
             userLocation.text = data.location
             totalRepo.text = data.publicRepos.toString()
             totalFollowers.text = data.followers.toString()
             totalFollowing.text = data.following.toString()
+
+            Picasso.get()
+                .load(data.avatarUrl)
+                .placeholder(R.drawable.avatar_placeholder)
+                .error(R.drawable.error_image)
+                .into(userImage)
         }
 
         dataOnClickAction()
@@ -137,12 +129,13 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun dataOnClickAction() {
+        val url = BuildConfig.BASE_URL.replace("api.", "").plus(data.login)
         binding.btnGithub.apply {
             visibility = View.VISIBLE
             setOnClickListener {
                 val browserIntent = Intent().apply {
                     action = Intent.ACTION_VIEW
-                    data = Uri.parse("https://github.com/${this@UserDetailActivity.data.login}")
+                    data = Uri.parse(url)
                 }
                 startActivity(browserIntent)
             }

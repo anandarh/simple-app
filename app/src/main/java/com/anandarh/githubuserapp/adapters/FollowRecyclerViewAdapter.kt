@@ -2,14 +2,13 @@ package com.anandarh.githubuserapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.databinding.ItemUserFollowBinding
-import com.anandarh.githubuserapp.models.GithubItemModel
-import com.bumptech.glide.Glide
+import com.anandarh.githubuserapp.models.UserModel
+import com.squareup.picasso.Picasso
 
-class FollowRecyclerViewAdapter(private val data: ArrayList<GithubItemModel>) :
+class FollowRecyclerViewAdapter(private val data: ArrayList<UserModel>) :
     RecyclerView.Adapter<FollowRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -26,20 +25,10 @@ class FollowRecyclerViewAdapter(private val data: ArrayList<GithubItemModel>) :
             with(data[position]) {
                 userAccount.text = login
 
-                Glide.with(holder.itemView.context)
+                Picasso.get()
                     .load(avatarUrl)
-                    .placeholder(
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.avatar_placeholder
-                        )
-                    )
-                    .error(
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.error_image
-                        )
-                    )
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .error(R.drawable.error_image)
                     .into(userImage)
             }
         }
