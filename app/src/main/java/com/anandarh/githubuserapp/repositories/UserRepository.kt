@@ -28,7 +28,7 @@ class UserRepository {
             try {
                 val gson = Gson()
                 val jsonString =
-                    Utils().getJsonFromAssets(resourceProvider.getContext(), JSON_ASSET_NAME)
+                    Utils().getJsonFromAssets(resourceProvider.context, JSON_ASSET_NAME)
                 val data = gson.fromJson(
                     jsonString,
                     UserListModel::class.java

@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUserApp"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activities.FavoriteActivity"/>
         <activity
             android:name=".ui.activities.UserDetailActivity"
             android:screenOrientation="portrait"
