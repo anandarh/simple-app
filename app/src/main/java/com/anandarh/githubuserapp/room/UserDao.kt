@@ -1,9 +1,6 @@
 package com.anandarh.githubuserapp.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.TABLE_USERS_NAME
 
 @Dao
@@ -14,4 +11,7 @@ interface UserDao {
 
     @Query("SELECT * FROM $TABLE_USERS_NAME")
     suspend fun get(): List<UserEntity>
+
+    @Delete
+    suspend fun delete(userEntity: UserEntity)
 }

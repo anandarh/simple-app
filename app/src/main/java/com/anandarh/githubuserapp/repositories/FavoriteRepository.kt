@@ -17,7 +17,6 @@ class FavoriteRepository(context: Context) {
 
     suspend fun addFavorite(user: UserModel): Flow<DataState<Long>> = flow {
         emit(DataState.Loading)
-        delay(UserRepository.DURATION)
         try {
             val mapper = localMapper.mapToEntity(user)
             val result = userDatabase.userDao().insert(mapper)
@@ -34,6 +33,17 @@ class FavoriteRepository(context: Context) {
             val users = userDatabase.userDao().get()
             val data = UserListModel(items = localMapper.mapFromEntityList(users))
             emit(DataState.Success(data))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun deleteFavorite(user: UserModel): Flow<DataState<Boolean>> = flow {
+        emit(DataState.Loading)
+        try {
+            val mapper = localMapper.mapToEntity(user)
+            userDatabase.userDao().delete(mapper)
+            emit(DataState.Success(true))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

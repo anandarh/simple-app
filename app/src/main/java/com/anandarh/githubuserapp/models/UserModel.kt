@@ -26,7 +26,7 @@ data class UserModel(
     val location: String?,
 
     @SerializedName("login")
-    val login: String?,
+    val login: String,
 
     @SerializedName("name")
     val name: String?,

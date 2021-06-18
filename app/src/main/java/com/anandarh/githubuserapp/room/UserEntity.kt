@@ -7,7 +7,11 @@ import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.TABLE_USE
 
 @Entity(tableName = TABLE_USERS_NAME)
 data class UserEntity(
+
     @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "login")
+    val login: String,
+
     @ColumnInfo(name = "id")
     var id: Int,
 
@@ -25,9 +29,6 @@ data class UserEntity(
 
     @ColumnInfo(name = "location")
     val location: String?,
-
-    @ColumnInfo(name = "login")
-    val login: String?,
 
     @ColumnInfo(name = "name")
     val name: String?,

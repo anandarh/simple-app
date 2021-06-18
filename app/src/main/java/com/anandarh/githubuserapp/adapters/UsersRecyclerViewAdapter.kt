@@ -10,8 +10,10 @@ import com.anandarh.githubuserapp.models.UserListModel
 import com.squareup.picasso.Picasso
 
 
-class UsersRecyclerViewAdapter(private val data: UserListModel) :
+class UsersRecyclerViewAdapter(users: UserListModel) :
     RecyclerView.Adapter<UsersRecyclerViewAdapter.UserViewHolder>() {
+
+    private var data: UserListModel = users
 
     private lateinit var onItemClickListener: ItemClickListener
 
@@ -53,14 +55,17 @@ class UsersRecyclerViewAdapter(private val data: UserListModel) :
             }
 
             holder.itemView.setOnClickListener {
-                onItemClickListener.onItemClick(login.orEmpty())
+                onItemClickListener.onItemClick(login)
             }
         }
     }
 
-    override fun getItemCount() =
-        data.items.size
+    override fun getItemCount() = data.items.size
 
+    fun updateData(users: UserListModel) {
+        data = users
+        notifyDataSetChanged()
+    }
 
     inner class UserViewHolder(val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root)
