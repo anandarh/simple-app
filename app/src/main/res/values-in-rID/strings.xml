@@ -7,7 +7,10 @@
     <string name="following">Mengikuti</string>
     <string name="user_profile">Profil Pengguna</string>
     <string name="github">github</string>
-    <string name="search">Cari</string>
+    <string name="settings">Pengaturan</string>
+    <string name="language">Bahasa</string>
+    <string name="reminder">Pengingat</string>
+    <string name="favorite">Favorit</string>
     <string name="search_hint">Masukkan username</string>
     <string name="error_title">TERJADI KESALAHAN</string>
 </resources>

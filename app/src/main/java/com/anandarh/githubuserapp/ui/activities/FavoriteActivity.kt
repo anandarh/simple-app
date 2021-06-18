@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.UsersRecyclerViewAdapter
 import com.anandarh.githubuserapp.databinding.ActivityFavoriteBinding
 import com.anandarh.githubuserapp.models.UserListModel
@@ -48,7 +49,10 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     private fun initializeUI() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setTitle(R.string.favorite)
+        }
 
         mAdapter = UsersRecyclerViewAdapter(usersData)
         binding.recyclerView.apply {

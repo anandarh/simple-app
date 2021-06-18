@@ -1,15 +1,14 @@
 package com.anandarh.githubuserapp.ui.activities
 
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anandarh.githubuserapp.R
@@ -31,23 +30,40 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: UsersViewModel
     private lateinit var data: UserListModel
 
-    private var mQuery: String? = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.elevation = 0F
+
         val viewModelFactory = UserViewModelFactory(ResourceProvider(this))
         viewModel = ViewModelProvider(this, viewModelFactory).get(UsersViewModel::class.java)
 
         subscribeObserver()
+        setSearchView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
-        setSearchView(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> {
+                startActivity(Intent(this, FavoriteActivity::class.java))
+            }
+
+            R.id.action_language -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
+
+            R.id.action_reminder -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun subscribeObserver() {
@@ -70,8 +86,31 @@ class MainActivity : AppCompatActivity() {
             })
 
             searchQuery.observe(this@MainActivity, {
-                mQuery = it
+                binding.search.editText?.setText(it)
             })
+        }
+    }
+
+    private fun setSearchView() {
+        binding.search.apply {
+            editText?.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+                val query = editText?.text.toString()
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    viewModel.setSearchQuery(query)
+                    viewModel.setStateEvent(UserStateEvent.GetSearchUserEvent(query))
+                    return@OnEditorActionListener true
+                }
+                false
+            })
+
+            setEndIconOnClickListener {
+                if (!data.items.isNullOrEmpty()) {
+                    viewModel.apply {
+                        setSearchQuery("")
+                        setStateEvent(UserStateEvent.GetUsersEvent)
+                    }
+                }
+            }
         }
     }
 
@@ -83,7 +122,13 @@ class MainActivity : AppCompatActivity() {
             adapter = usersAdapter
         }
 
-        setItemClickAction()
+        usersAdapter.setOnItemClickListener(object : UsersRecyclerViewAdapter.ItemClickListener {
+            override fun onItemClick(username: String) {
+                val objectIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
+                objectIntent.putExtra(EXTRA_USERNAME, username)
+                startActivity(objectIntent)
+            }
+        })
     }
 
     private fun displayProgressBar(isDisplayed: Boolean) {
@@ -94,61 +139,6 @@ class MainActivity : AppCompatActivity() {
         binding.errorContainer.apply {
             root.visibility = View.VISIBLE
             errorDesc.text = error
-        }
-    }
-
-    private fun setItemClickAction() {
-        usersAdapter.setOnItemClickListener(object : UsersRecyclerViewAdapter.ItemClickListener {
-            override fun onItemClick(username: String) {
-                val objectIntent = Intent(this@MainActivity, UserDetailActivity::class.java)
-                objectIntent.putExtra(EXTRA_USERNAME, username)
-                startActivity(objectIntent)
-            }
-        })
-    }
-
-    private fun setSearchView(menu: Menu) {
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.search).actionView as SearchView
-        val closeButton = searchView.findViewById(R.id.search_close_btn) as ImageView
-
-        menu.findItem(R.id.search)
-            .setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                    searchView.apply {
-                        onActionViewExpanded()
-                        setQuery(mQuery, false)
-                    }
-                    return true
-                }
-
-                override fun onMenuItemActionCollapse(item: MenuItem?) = true
-            })
-
-        searchView.apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            queryHint = resources.getString(R.string.search_hint)
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    viewModel.setSearchQuery(query.orEmpty())
-                    viewModel.setStateEvent(UserStateEvent.GetSearchUserEvent(query.orEmpty()))
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return false
-                }
-            })
-        }
-
-        closeButton.setOnClickListener {
-            if (!data.items.isNullOrEmpty()) {
-                viewModel.apply {
-                    setSearchQuery("")
-                    setStateEvent(UserStateEvent.GetUsersEvent)
-                }
-            }
-            searchView.setQuery("", false)
         }
     }
 }

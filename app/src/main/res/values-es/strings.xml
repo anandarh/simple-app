@@ -7,7 +7,10 @@
     <string name="following">Seguidos</string>
     <string name="user_profile">Perfil</string>
     <string name="github">github</string>
-    <string name="search">Buscar</string>
+    <string name="settings">Ajustes</string>
+    <string name="language">Idioma</string>
+    <string name="reminder">Recordatorio</string>
+    <string name="favorite">Favorito</string>
     <string name="search_hint">Nombre de usuario</string>
     <string name="error_title">Algo está mal</string>
 </resources>
