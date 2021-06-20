@@ -16,33 +16,31 @@ import kotlinx.coroutines.launch
 class FavoriteViewModel(resourceProvider: ResourceProvider) : ViewModel() {
     private val _repository: FavoriteRepository =
         FavoriteRepository(resourceProvider.context.applicationContext)
-    private val _dataState: MutableLiveData<DataState<UserListModel>> by lazy {
-        MutableLiveData<DataState<UserListModel>>().also {
-            getFavorites()
-        }
-    }
+    private val _dataState: MutableLiveData<DataState<UserListModel>> = MutableLiveData()
 
     val dataState: LiveData<DataState<UserListModel>>
         get() = _dataState
 
-    private fun getFavorites() {
+    fun isFavorited(username: String): LiveData<Boolean> =
+        _repository.isFavorited(username)
+
+    fun getFavorites() {
         viewModelScope.launch {
             _repository.getFavorites().onEach { dataState ->
-                _dataState.postValue(dataState)
+                _dataState.value = dataState
             }.launchIn(viewModelScope)
         }
     }
 
     fun addFavorite(user: UserModel) {
         viewModelScope.launch {
-            _repository.addFavorite(user).launchIn(viewModelScope)
+            _repository.addFavorite(user)
         }
     }
 
     fun deleteFavorite(user: UserModel) {
         viewModelScope.launch {
-            _repository.deleteFavorite(user).launchIn(viewModelScope)
-            getFavorites()
+            _repository.deleteFavorite(user)
         }
     }
 

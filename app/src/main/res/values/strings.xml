@@ -10,6 +10,7 @@
     <string name="language">Language</string>
     <string name="reminder">Reminder</string>
     <string name="favorite">Favorite</string>
+    <string name="has_deleted">Data has been deleted</string>
     <string name="search_hint">Enter username</string>
     <string name="error_title">Something\'s Wrong</string>
 </resources>

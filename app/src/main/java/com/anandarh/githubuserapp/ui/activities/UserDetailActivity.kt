@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -17,6 +18,9 @@ import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERN
 import com.anandarh.githubuserapp.databinding.ActivityUserDetailBinding
 import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.utilities.DataState
+import com.anandarh.githubuserapp.utilities.ResourceProvider
+import com.anandarh.githubuserapp.viewmodels.FavoriteViewModel
+import com.anandarh.githubuserapp.viewmodels.FavoriteViewModelFactory
 import com.anandarh.githubuserapp.viewmodels.FollowViewModel
 import com.anandarh.githubuserapp.viewmodels.UserDetailViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,10 +39,15 @@ class UserDetailActivity : AppCompatActivity() {
 
     private val viewModel: UserDetailViewModel by viewModels()
     private val viewModelFollow: FollowViewModel by viewModels()
+    private val viewModelFavorite: FavoriteViewModel by viewModels(
+        factoryProducer = { FavoriteViewModelFactory(ResourceProvider(this)) }
+    )
 
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var data: UserModel
     private lateinit var username: String
+
+    private var isFavorited = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,40 +56,91 @@ class UserDetailActivity : AppCompatActivity() {
 
         username = intent.getStringExtra(EXTRA_USERNAME).orEmpty()
 
-        headerButtonAction()
+        initializeUI()
         initializeViewModel()
         initializeTabView()
 
     }
 
-    private fun headerButtonAction() {
-        binding.btnBack.setOnClickListener {
-            finish()
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        viewModel.dataState.observe(this, { dataState ->
+            when (dataState) {
+                is DataState.Success -> {
+                    menuInflater.inflate(R.menu.detail_menu, menu)
+                }
+                else -> {
+                }
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val item = menu?.findItem(R.id.action_favorite)
+        if (isFavorited) {
+            item?.setIcon(R.drawable.ic_favorite_24)
+        } else {
+            item?.setIcon(R.drawable.ic_favorite_border_24)
         }
-        binding.btnLang.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> {
+                viewModelFavorite.apply {
+                    if (this@UserDetailActivity.isFavorited)
+                        deleteFavorite(data)
+                    else
+                        addFavorite(data)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initializeUI() {
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setTitle(R.string.user_profile)
+            elevation = 0F
         }
     }
 
     private fun initializeViewModel() {
-        viewModel.dataState.observe(this, { dataState ->
-            when (dataState) {
-                is DataState.Success<UserModel> -> {
-                    displayProgressBar(false)
-                    data = dataState.data
-                    displayData()
+        viewModel.apply {
+            dataState.observe(this@UserDetailActivity, { dataState ->
+                when (dataState) {
+                    is DataState.Success<UserModel> -> {
+                        displayProgressBar(false)
+                        data = dataState.data
+                        displayData()
+                    }
+                    is DataState.Error -> {
+                        displayProgressBar(false)
+                        displayError(dataState.exception.toString())
+                    }
+                    is DataState.Loading -> {
+                        displayProgressBar(true)
+                    }
                 }
-                is DataState.Error -> {
-                    displayProgressBar(false)
-                    displayError(dataState.exception.toString())
-                }
-                is DataState.Loading -> {
-                    displayProgressBar(true)
-                }
+            })
+
+            getUserDetail(username)
+        }
+
+        viewModelFavorite.isFavorited(username).observe(this, {
+            if (it != isFavorited) {
+                invalidateOptionsMenu()
             }
+            isFavorited = it
         })
 
-        viewModel.getUserDetail(username)
         viewModelFollow.getFollowersFollowing(username)
     }
 
@@ -110,6 +170,7 @@ class UserDetailActivity : AppCompatActivity() {
                 .into(userImage)
         }
 
+        invalidateOptionsMenu()
         dataOnClickAction()
     }
 

@@ -11,6 +11,7 @@
     <string name="language">Langue</string>
     <string name="reminder">Rappel</string>
     <string name="favorite">Préféré</string>
+    <string name="has_deleted">Les données ont été supprimées</string>
     <string name="search_hint">Nom d\'utilisateur</string>
     <string name="error_title">Quelque chose ne va pas</string>
 </resources>

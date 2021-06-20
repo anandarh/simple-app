@@ -18,7 +18,6 @@
         <activity
             android:name=".ui.activities.UserDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.GithubUserApp.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.activities.SplashActivity"

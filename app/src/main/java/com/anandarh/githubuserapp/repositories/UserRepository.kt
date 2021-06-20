@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flow
 class UserRepository {
 
     companion object {
-        const val DURATION: Long = 1000
+        const val DURATION: Long = 500
     }
 
     private val apiService: GithubApiService = GithubApiService()
