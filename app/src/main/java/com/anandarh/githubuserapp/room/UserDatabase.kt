@@ -9,6 +9,7 @@ import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.DATABASE_
 @Database(entities = [UserEntity::class], version = 1)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract val providerDao: ProviderDao
 
     companion object {
         @Volatile
