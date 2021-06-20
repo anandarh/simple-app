@@ -9,9 +9,13 @@
     <string name="github">github</string>
     <string name="settings">Ajustes</string>
     <string name="language">Idioma</string>
-    <string name="reminder">Recordatorio</string>
+    <string name="reminder">Recordatorio diario</string>
     <string name="favorite">Favorito</string>
     <string name="has_deleted">Se han eliminado los datos</string>
+    <string name="alarm_time">Hora de alarma</string>
+    <string name="reminder_message">Ingrese un mensaje recordatorio</string>
+    <string name="cancel_reminder">Cancelar recordatorio</string>
+    <string name="set_reminder">Establecer recordatorio</string>
     <string name="search_hint">Nombre de usuario</string>
     <string name="error_title">Algo está mal</string>
 </resources>

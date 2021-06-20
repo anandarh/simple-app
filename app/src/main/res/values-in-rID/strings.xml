@@ -9,9 +9,13 @@
     <string name="github">github</string>
     <string name="settings">Pengaturan</string>
     <string name="language">Bahasa</string>
-    <string name="reminder">Pengingat</string>
+    <string name="reminder">Pengingat Harian</string>
     <string name="favorite">Favorit</string>
     <string name="has_deleted">Data telah dihapus</string>
+    <string name="alarm_time">Waktu Alarm</string>
+    <string name="reminder_message">Masukkan pesan pengingat</string>
+    <string name="cancel_reminder">Batalkan Pengingat</string>
+    <string name="set_reminder">Setel Pengingat</string>
     <string name="search_hint">Masukkan username</string>
     <string name="error_title">TERJADI KESALAHAN</string>
 </resources>

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.action_reminder -> {
-
+                startActivity(Intent(this, ReminderActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)
