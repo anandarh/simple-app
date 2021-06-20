@@ -12,15 +12,17 @@
         android:title="@string/settings"
         app:showAsAction="always">
         <menu>
-            <item android:id="@+id/action_language"
+            <item
+                android:id="@+id/action_language"
                 android:icon="@drawable/ic_language_24"
-                app:showAsAction="ifRoom"
-                android:title="@string/language" />
+                android:title="@string/language"
+                app:showAsAction="ifRoom" />
 
-            <item android:id="@+id/action_reminder"
+            <item
+                android:id="@+id/action_reminder"
                 android:icon="@drawable/ic_add_alarm_24"
-                app:showAsAction="ifRoom"
-                android:title="@string/reminder" />
+                android:title="@string/reminder"
+                app:showAsAction="ifRoom" />
 
         </menu>
     </item>
