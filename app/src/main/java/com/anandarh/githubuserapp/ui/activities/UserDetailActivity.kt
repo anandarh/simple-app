@@ -16,11 +16,11 @@ import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.FollowPagerAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
 import com.anandarh.githubuserapp.databinding.ActivityUserDetailBinding
+import com.anandarh.githubuserapp.factories.FavoriteViewModelFactory
 import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.utilities.ResourceProvider
 import com.anandarh.githubuserapp.viewmodels.FavoriteViewModel
-import com.anandarh.githubuserapp.viewmodels.FavoriteViewModelFactory
 import com.anandarh.githubuserapp.viewmodels.FollowViewModel
 import com.anandarh.githubuserapp.viewmodels.UserDetailViewModel
 import com.google.android.material.tabs.TabLayoutMediator

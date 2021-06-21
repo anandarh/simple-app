@@ -15,11 +15,11 @@ import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.UsersRecyclerViewAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant.Companion.EXTRA_USERNAME
 import com.anandarh.githubuserapp.databinding.ActivityMainBinding
+import com.anandarh.githubuserapp.factories.UserViewModelFactory
 import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.utilities.ResourceProvider
 import com.anandarh.githubuserapp.viewmodels.UserStateEvent
-import com.anandarh.githubuserapp.viewmodels.UserViewModelFactory
 import com.anandarh.githubuserapp.viewmodels.UsersViewModel
 
 
