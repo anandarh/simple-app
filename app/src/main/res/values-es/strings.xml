@@ -18,4 +18,5 @@
     <string name="set_reminder">Establecer recordatorio</string>
     <string name="search_hint">Nombre de usuario</string>
     <string name="error_title">Algo está mal</string>
+    <string name="no_user_favorite">No hay usuarios en favoritos</string>
 </resources>

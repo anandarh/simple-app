@@ -44,6 +44,7 @@ class FavoriteActivity : AppCompatActivity() {
                     usersData = dataState.data
                     mAdapter.updateData(usersData)
                     displayProgressBar(false)
+                    displayEmpty(usersData.items.isEmpty())
 
                     if (!isFirstLoaded) {
                         Snackbar.make(binding.root, R.string.has_deleted, Snackbar.LENGTH_LONG)
@@ -95,6 +96,11 @@ class FavoriteActivity : AppCompatActivity() {
                 startActivity(objectIntent)
             }
         })
+    }
+
+    private fun displayEmpty(isDisplayed: Boolean) {
+        binding.emptyContainer.visibility =
+            if (isDisplayed) View.VISIBLE else View.GONE
     }
 
     private fun displayError(error: String) {
