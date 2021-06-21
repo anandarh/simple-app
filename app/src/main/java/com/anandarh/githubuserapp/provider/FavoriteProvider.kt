@@ -7,6 +7,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.AUTHORITY
+import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.CONTENT_URI
 import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.TABLE_USERS_NAME
 import com.anandarh.githubuserapp.room.UserDatabase
 
@@ -19,10 +20,7 @@ class FavoriteProvider : ContentProvider() {
         private lateinit var userDatabase: UserDatabase
 
         init {
-            // content://com.anandarh.githubuserapp/users
             sUriMatcher.addURI(AUTHORITY, TABLE_USERS_NAME, FAV)
-
-            // content://com.anandarh.githubuserapp/users/id
             sUriMatcher.addURI(AUTHORITY, "$TABLE_USERS_NAME/#", FAV_ID)
         }
 
@@ -49,6 +47,7 @@ class FavoriteProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
         return null
     }
 
@@ -61,6 +60,7 @@ class FavoriteProvider : ContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        return 0
+        context?.contentResolver?.notifyChange(uri, null)
+        return 11
     }
 }

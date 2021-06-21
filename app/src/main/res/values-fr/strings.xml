@@ -18,4 +18,5 @@
     <string name="set_reminder">Définir un rappel</string>
     <string name="search_hint">Nom d\'utilisateur</string>
     <string name="error_title">Quelque chose ne va pas</string>
+    <string name="no_user_favorite">Aucun utilisateur dans les favoris</string>
 </resources>

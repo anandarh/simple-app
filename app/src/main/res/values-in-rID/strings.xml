@@ -18,4 +18,5 @@
     <string name="set_reminder">Setel Pengingat</string>
     <string name="search_hint">Masukkan username</string>
     <string name="error_title">TERJADI KESALAHAN</string>
+    <string name="no_user_favorite">Tidak ada pengguna difavoritkan</string>
 </resources>

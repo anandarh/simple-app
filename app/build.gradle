@@ -63,7 +63,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
 
-    def version_fragment = "1.3.4"
+    def version_fragment = "1.3.5"
     implementation "androidx.fragment:fragment-ktx:$version_fragment"
 
     def version_picasso = "2.71828"

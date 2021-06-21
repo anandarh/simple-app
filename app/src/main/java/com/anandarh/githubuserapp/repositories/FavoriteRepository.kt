@@ -3,6 +3,7 @@ package com.anandarh.githubuserapp.repositories
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.anandarh.githubuserapp.constants.DatabaseConstant.Companion.CONTENT_URI
 import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.models.UserModel
 import com.anandarh.githubuserapp.room.LocalMapper
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
-class FavoriteRepository(context: Context) {
+class FavoriteRepository(private val context: Context) {
 
     companion object {
         const val DURATION: Long = 500
@@ -26,6 +27,7 @@ class FavoriteRepository(context: Context) {
         try {
             val mapper = localMapper.mapToEntity(user)
             userDatabase.userDao().insert(mapper)
+            context.contentResolver.insert(CONTENT_URI, null)
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -48,6 +50,7 @@ class FavoriteRepository(context: Context) {
         try {
             val mapper = localMapper.mapToEntity(user)
             userDatabase.userDao().delete(mapper)
+            context.contentResolver.delete(CONTENT_URI, null, null)
         } catch (e: Exception) {
             throw Exception(e.message)
         }

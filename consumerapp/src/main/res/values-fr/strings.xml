@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Consumer App</string>
+    <string name="space_repositories"><![CDATA[ référentiels]]></string>
+    <string name="error_title">Quelque chose ne va pas</string>
+    <string name="no_favorite">Tidak ada user difavoritkan\nFavoritkan dulu melalui Github User App</string>
+</resources>
