@@ -8,11 +8,10 @@ import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
 import com.anandarh.githubuserapp.GitFavoriteWidget
 import com.anandarh.githubuserapp.R
-import com.anandarh.githubuserapp.constants.IntentConstant
 import com.anandarh.githubuserapp.models.UserListModel
+import com.anandarh.githubuserapp.room.UserDatabase
 import com.anandarh.githubuserapp.utilities.CircleTransform
-import com.anandarh.githubuserapp.utilities.Utils
-import com.google.gson.Gson
+import com.anandarh.githubuserapp.utilities.CursorMapper
 import com.squareup.picasso.Picasso
 
 internal class StackRemoteViewsFactory(private val context: Context) :
@@ -25,14 +24,9 @@ internal class StackRemoteViewsFactory(private val context: Context) :
     }
 
     override fun onDataSetChanged() {
-        val gson = Gson()
-        val jsonString =
-            Utils().getJsonFromAssets(context, IntentConstant.JSON_ASSET_NAME)
-        val data = gson.fromJson(
-            jsonString,
-            UserListModel::class.java
-        )
-        users = data
+        val userDatabase = UserDatabase.invoke(context.applicationContext)
+        val data = userDatabase.providerDao.getAll()
+        users = CursorMapper.mapCursorToUserListModel(data)
     }
 
     override fun onDestroy() {

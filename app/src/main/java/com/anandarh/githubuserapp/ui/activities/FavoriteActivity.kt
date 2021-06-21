@@ -12,12 +12,12 @@ import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.adapters.UsersRecyclerViewAdapter
 import com.anandarh.githubuserapp.constants.IntentConstant
 import com.anandarh.githubuserapp.databinding.ActivityFavoriteBinding
+import com.anandarh.githubuserapp.factories.FavoriteViewModelFactory
 import com.anandarh.githubuserapp.models.UserListModel
 import com.anandarh.githubuserapp.utilities.DataState
 import com.anandarh.githubuserapp.utilities.ResourceProvider
 import com.anandarh.githubuserapp.utilities.SwipeToDeleteCallback
 import com.anandarh.githubuserapp.viewmodels.FavoriteViewModel
-import com.anandarh.githubuserapp.viewmodels.FavoriteViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class FavoriteActivity : AppCompatActivity() {
