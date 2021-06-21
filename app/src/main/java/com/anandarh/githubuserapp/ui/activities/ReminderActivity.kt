@@ -2,24 +2,30 @@ package com.anandarh.githubuserapp.ui.activities
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.anandarh.githubuserapp.R
 import com.anandarh.githubuserapp.databinding.ActivityReminderBinding
+import com.anandarh.githubuserapp.models.ReminderModel
 import com.anandarh.githubuserapp.utilities.AlarmReceiver
+import com.anandarh.githubuserapp.utilities.SharedPreferences
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReminderActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityReminderBinding
-    private val alarmReceiver: AlarmReceiver = AlarmReceiver()
+    private lateinit var sharedPreferences: SharedPreferences
 
+    private val alarmReceiver: AlarmReceiver = AlarmReceiver()
     private val cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReminderBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = SharedPreferences(this@ReminderActivity)
 
         initializeUI()
         setOnClickAction()
@@ -35,6 +41,14 @@ class ReminderActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setTitle(R.string.reminder)
+        }
+
+        val savedReminder = sharedPreferences.getReminder()
+        if (savedReminder != null) {
+            binding.tvTimer.text = savedReminder.time
+            binding.reminderMessage.setText(savedReminder.message)
+
+            Toast.makeText(this, "Reminder is active", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -60,17 +74,31 @@ class ReminderActivity : AppCompatActivity() {
             val message = binding.reminderMessage
             val timer = binding.tvTimer.text.toString()
 
-            if (message.text.trim().isEmpty()) {
+            val messageString = message.text.trim().toString()
+
+            if (messageString.isEmpty()) {
                 message.error = ""
             } else {
                 alarmReceiver.setReminder(
                     this,
-                    timer, message.text.trim().toString()
+                    timer, messageString
+                )
+
+                sharedPreferences.setReminder(
+                    ReminderModel(
+                        time = timer,
+                        message = messageString
+                    )
                 )
             }
 
         }
 
-        binding.btnCancelReminder.setOnClickListener { alarmReceiver.cancelReminder(this) }
+        binding.btnCancelReminder.setOnClickListener {
+            alarmReceiver.cancelReminder(this)
+            sharedPreferences.removeReminder()
+            binding.tvTimer.setText(R.string.alarm_time)
+            binding.reminderMessage.text.clear()
+        }
     }
 }
