@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.anandarh.githubuserapp.R
+import com.anandarh.githubuserapp.ui.activities.MainActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -77,6 +78,13 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun showReminderNotification(context: Context, message: String) {
 
+        val notifyIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val notifyPendingIntent = PendingIntent.getActivity(
+            context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val channelId = "Reminder_1"
         val channelName = "Reminder channel"
 
@@ -86,9 +94,11 @@ class AlarmReceiver : BroadcastReceiver() {
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notifyBuilder = NotificationCompat.Builder(context, channelId)
+            .setContentIntent(notifyPendingIntent)
             .setSmallIcon(R.drawable.ic_alarm)
             .setContentTitle("REMINDER")
             .setContentText(message)
+            .setAutoCancel(true)
             .setColor(ContextCompat.getColor(context, android.R.color.transparent))
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
             .setSound(alarmSound)
